@@ -16,6 +16,7 @@
         <guava.version>21.0</guava.version>
         <juint.version>4.12</juint.version>
         <lombok.version>1.16.20</lombok.version>
+        <netty.version>4.0.33.Final</netty.version>
     </properties>
 
 
@@ -37,6 +38,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <!-- Netty -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec-http</artifactId>
+            <version>${netty.version}</version>
         </dependency>
     </dependencies>
 
