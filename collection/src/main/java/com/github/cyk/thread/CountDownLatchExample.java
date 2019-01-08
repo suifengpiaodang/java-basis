@@ -2,7 +2,6 @@ package com.github.cyk.thread;
 
 import org.junit.Test;
 
-import java.io.Writer;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
