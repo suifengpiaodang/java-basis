@@ -1,9 +1,11 @@
 package com.github.cyk.collection;
 
+import com.github.cyk.annotation.FlightLog;
 import com.github.cyk.model.User;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
+@Component
 public class Stream {
 
     //构造流的几种常见方法
@@ -32,6 +35,7 @@ public class Stream {
     }
 
     @Test
+    @FlightLog
     public void toUpper(){
         List<String> wordList = Lists.newLinkedList();
         wordList.add("q");
