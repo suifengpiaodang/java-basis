@@ -7,13 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static org.junit.Assert.assertEquals;
 
 @Component
 public class Stream {
@@ -193,11 +191,62 @@ public class Stream {
 
 
 
+    /**
+     * 使用java8 stream groupingBy操作,
+     */
+    @Test
+    public void groupingByTest() {
+        List<User> users = this.genUserList();
+        Map<Integer, List<User>> userMap =
+                users.stream().collect(Collectors.groupingBy(User::getAge));
+        System.out.println(userMap);
+
+    }
+
+    @Test
+    public void groupingByCountTest() {
+        List<User> users = this.genUserList();
+        Map<Integer, Long> userMap =
+                users.stream().collect(Collectors.groupingBy(User::getAge, Collectors.counting()));
+        System.out.println(userMap);
+        assertEquals(userMap.get(10).longValue(), 3L);
+    }
+
+    @Test
+    public void groupingByAverageTest() {
+        List<User> users = this.genUserList();
+        Map<String, Double> userMap =
+                users.stream().collect(Collectors.groupingBy(User::getUserName, Collectors.averagingInt(User::getAge)));
+        System.out.println(userMap);
+        //assertEquals(userMap.get("London").intValue(), 175);
+
+    }
+
+    @Test
+    public void groupingBySumTest() {
+        List<User> users = this.genUserList();
+        Map<String, Long> employeesByCity =
+                users.stream().collect(Collectors.groupingBy(User::getUserName, Collectors.summingLong(User::getAge)));
+
+        //对Map按照分组销售总值逆序排序
+        Map<String, Long> finalMap = new LinkedHashMap<>();
+        employeesByCity.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue()
+                        .reversed()).forEachOrdered(e -> finalMap.put(e.getKey(), e.getValue()));
+
+        System.out.println(finalMap);
+        //assertEquals(finalMap.get("London").longValue(), 350);
+
+    }
+
+
+
     private List<User> genUserList(){
         List<User> userList = Lists.newLinkedList();
         User user1 =User.builder().address("bj").age(10).userName("zhangsan").build();
-        User user2 =User.builder().address("sh").age(10).userName("lisi").build();
-        User user3 =User.builder().address("gz").age(10).userName("wangwu").build();
+        User user2 =User.builder().address("sh").age(12).userName("lisi").build();
+        User user3 =User.builder().address("gz2").age(10).userName("wangwu").build();
+        User user4 =User.builder().address("gz1").age(17).userName("wangwu").build();
         userList.add(user1);
         userList.add(user2);
         userList.add(user3);
